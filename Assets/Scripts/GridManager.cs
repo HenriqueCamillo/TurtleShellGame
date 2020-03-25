@@ -43,8 +43,8 @@ public class GridManager : MonoBehaviour
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 tile = WorldToTileIndex(mousePosition);
 
-            if (tile == lastTile)
-                return;
+            if (tile == lastTile)           return;
+            if (tile.x < 0 || tile.y < 0)   return;
             
             if (grid[(int)lastTile.x, (int)lastTile.y] != null)
                 grid[(int)lastTile.x, (int)lastTile.y].GetComponent<SpriteRenderer>().color = Color.white; 

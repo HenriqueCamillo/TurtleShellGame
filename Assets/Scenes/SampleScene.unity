@@ -587,6 +587,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &586612864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -488035094471090297, guid: ebba3d94fe0528441b75a9206c9c6944,
+    type: 3}
+  m_PrefabInstance: {fileID: 3393792021400843099}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e527328d6539f646b125e9b8c98dfe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1193485719
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +903,7 @@ GameObject:
   - component: {fileID: 1313294269}
   - component: {fileID: 1313294268}
   - component: {fileID: 1313294270}
+  - component: {fileID: 1313294271}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -941,7 +954,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellSize: 1
   gridSize: 100
-  obj: {fileID: 3758774656263053777, guid: 65d37dd83ac1d514a8753cc09240eaeb, type: 3}
+  obj: {fileID: 586612864}
+--- !u!114 &1313294271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313294267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ea7f62ca486d84ea1bb84cd93a151b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHoldingObject: 0
+  holdingObject: {fileID: 0}
 --- !u!1 &1396016108
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1146,11 @@ PrefabInstance:
     - target: {fileID: 3393792021205844052, guid: ebba3d94fe0528441b75a9206c9c6944,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393792021205844053, guid: ebba3d94fe0528441b75a9206c9c6944,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3393792021205844054, guid: ebba3d94fe0528441b75a9206c9c6944,

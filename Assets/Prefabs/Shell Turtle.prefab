@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3393792021205844052}
   - component: {fileID: 3393792021205844043}
   - component: {fileID: 3393792021205844053}
+  - component: {fileID: -488035094471090297}
   m_Layer: 0
   m_Name: Shell Turtle
   m_TagString: Untagged
@@ -92,13 +93,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 3393792021205844054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00774df5143fdbb47ad6a617648bf4be, type: 3}
+  m_Script: {fileID: 11500000, guid: ada34fccbc9d218479f0a4420d4a2d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSelected: 0
   shellPrefab: {fileID: 3758774656263053777, guid: 65d37dd83ac1d514a8753cc09240eaeb,
     type: 3}
   arrow: {fileID: 6584814677965025488}
-  isSelected: 1
+--- !u!114 &-488035094471090297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3393792021205844054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6022a354e5146439a3c03be51b9a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaced: 0
+  tile: {x: 0, y: 0}
+  positionedInInspector: 0
 --- !u!1 &6584814677965025488
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6584814677965025494
 Transform:
   m_ObjectHideFlags: 0

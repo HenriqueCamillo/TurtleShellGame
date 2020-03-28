@@ -2,11 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Throw : MonoBehaviour
+public class ShellTurtle : Selectable
 {
     [SerializeField] GameObject shellPrefab;
     [SerializeField] GameObject arrow;
-    [SerializeField] bool isSelected;
+    private bool isAiming = false;
+    [SerializeField] float minDragDistance = 0.3f;
+
+
+    private bool IsAiming 
+    {
+        get => isAiming;
+        set
+        {
+            isAiming = value;
+            arrow.SetActive(value);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -17,14 +29,22 @@ public class Throw : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isSelected)
+        if (isAiming)
         {
             Vector2 direction = GetNearestDirection();
-            DrawArrow(direction);
+            RotateArrow(direction);
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
             {
-                ThrowShell(direction);
+                if (Vector2.Distance(this.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)) > minDragDistance)
+                {
+                    ThrowShell(direction);
+
+                }
+                else
+                {
+                    Debug.Log("Too close");
+                }
             }
         }        
     }
@@ -38,7 +58,7 @@ public class Throw : MonoBehaviour
 
     private Vector2 GetNearestDirection()
     {
-        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - this.transform.position   ;
+        Vector2 direction = this.transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2[] possibleDirections = {Vector2.up, Vector2.right, Vector2.down, Vector2.left,
                                         Vector2.up + Vector2.right, Vector2.right + Vector2.down,
@@ -59,19 +79,26 @@ public class Throw : MonoBehaviour
         return nearest;
     }
 
-    public void Select()
+    public override void Select()
     {
         isSelected = true;
-        arrow.SetActive(true);
+        GetComponent<SpriteRenderer>().color = Color.green;
     }
 
-    void Unselect()
+    public override void Unselect()
     {
         isSelected = false;
-        arrow.SetActive(false);
+        IsAiming = false;
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
-    void DrawArrow(Vector2 direction)
+    public override void SecondClick()
+    {
+        IsAiming = true;
+    }
+
+
+    void RotateArrow(Vector2 direction)
     {
         arrow.transform.rotation = Quaternion.Euler(0f, 0f, Vector2.SignedAngle(Vector2.right, direction));
     }

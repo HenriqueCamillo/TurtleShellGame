@@ -46,10 +46,21 @@ public class Selector : MonoBehaviour
                 {
                     selectedObject.SecondClick();
                 }
-                // else
-                // {
-                //     Snappable content = GridManager.instance.GetGridContentByTile(clickedTile);
-                // }
+                else
+                {
+                    Unselect();
+
+                    Snappable content = GridManager.instance.GetGridContentByTile(clickedTile);
+                    if (content != null && content.TryGetComponent(out Selectable selectable))
+                    {
+                        selectedObject = selectable;
+                        snappable = content;
+                        isSelectingObject = true;
+                        selectedObjectTile = snappable.tile;
+
+                        selectable.Select();
+                    }
+                }
                     
             }
             // heldObject.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -65,5 +76,11 @@ public class Selector : MonoBehaviour
         }
     }
 
-    
+    public void Unselect()
+    {
+        selectedObject.Unselect();
+        selectedObject = null;
+        snappable = null;
+        isSelectingObject = false;
+    }
 }

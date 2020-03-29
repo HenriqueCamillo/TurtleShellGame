@@ -39,7 +39,7 @@ public class ShellTurtle : Selectable
                 if (Vector2.Distance(this.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)) > minDragDistance)
                 {
                     ThrowShell(direction);
-
+                    Selector.instance.Unselect();
                 }
                 else
                 {
@@ -51,7 +51,6 @@ public class ShellTurtle : Selectable
 
     private void ThrowShell(Vector2 direction)
     {
-        Unselect();
         GameObject shell = Instantiate(shellPrefab, this.transform.position, Quaternion.identity);
         shell.transform.rotation = Quaternion.Euler(0f, 0f, Vector2.SignedAngle(Vector2.right, direction));
     }

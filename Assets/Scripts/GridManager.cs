@@ -6,13 +6,12 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager instance;
     [SerializeField] float cellSize;
-    [SerializeField] int gridSize = 40;
+    [SerializeField] int gridSize;
     private Snappable[,] grid;
     private Vector2 lastTile = Vector2.zero;
+    [SerializeField] bool showGrid;
 
-    [SerializeField] Snappable obj;
 
-    // Start is called before the first frame update
     void Awake()
     {
         if (instance == null)
@@ -26,16 +25,6 @@ public class GridManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 tile = WorldToTileIndex(clickPosition);
-            Vector2 position = TileToWorldPosition(tile);
-
-            // GameObject gmObj = Instantiate(obj, position, Quaternion.identity);
-            // grid[(int)tile.x, (int)tile.y] = gmObj;
-        }
-
         // Highlight(); 
     }
 
@@ -58,13 +47,13 @@ public class GridManager : MonoBehaviour
 
     public bool PlaceByTile(Snappable snap, Vector2 tile)
     {
-        // Checks if the tile is occupied
-        if (!FreeTile(tile))
+        if (!TileIsFree(tile))
         {
             snap.Reset();
-            return false; //TODO Change objects
+            return false; 
         }
 
+        // If moving a tile (not placing a new), frees the last tile
         if (snap.isPlaced)
         {
             SetGridContentByTile(null, tile);
@@ -82,14 +71,7 @@ public class GridManager : MonoBehaviour
         return PlaceByTile(snap, tile);
     }
 
-    // public Snappable GetObject(Vector2 tile)
-    // {
-    //     Snappable content = GetGridContent(tile);
-
-    //     return content;
-    // }
-
-    public bool FreeTile(Vector2 tile)
+    public bool TileIsFree(Vector2 tile)
     {
         if (GetGridContentByTile(tile) != null)
         {
@@ -155,11 +137,18 @@ public class GridManager : MonoBehaviour
         return (Vector2)this.transform.position + tile + new Vector2(cellSize/2, cellSize/2);
     }
 
-
     void OnDrawGizmos()
     {
-        // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 1);
+        Gizmos.DrawSphere(transform.position, cellSize/2f);
+
+        if (showGrid)
+        {
+            for (int i = 0; i < gridSize; i++)
+            {
+                Gizmos.DrawLine(this.transform.position + Vector3.up * cellSize * gridSize + Vector3.right * i, this.transform.position + Vector3.right * i);
+                Gizmos.DrawLine(this.transform.position + Vector3.right * cellSize * gridSize + Vector3.up * i, this.transform.position + Vector3.up * i);
+            }
+        }
     }
 }

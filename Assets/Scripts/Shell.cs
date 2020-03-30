@@ -29,9 +29,25 @@ public class Shell : MonoBehaviour
         if (hit)
         {
             if (hit.collider.CompareTag("SoftWall"))
-                direction = Vector2.Reflect(direction, hit.normal);
+            {
+                Vector2 newDirection = Vector2.Reflect(direction, hit.normal);
+                
+                // Doesn't reflect in the opposite direction to avoid loops
+                if (newDirection == -direction)
+                {
+                    Selector.instance.AcitonEnded();
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    direction = newDirection;   
+                }
+            }
             else if (hit.collider.CompareTag("HardWall"))
+            {
+                Selector.instance.AcitonEnded();
                 Destroy(this.gameObject);
+            }
         }
     }
 }

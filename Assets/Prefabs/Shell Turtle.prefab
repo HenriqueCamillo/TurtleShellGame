@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -488035094471090297}
   m_Layer: 0
   m_Name: Shell Turtle
-  m_TagString: Untagged
+  m_TagString: ActionUnity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   shellPrefab: {fileID: 3758774656263053777, guid: 65d37dd83ac1d514a8753cc09240eaeb,
     type: 3}
   arrow: {fileID: 6584814677965025488}
+  minDragDistance: 0.3
 --- !u!114 &-488035094471090297
 MonoBehaviour:
   m_ObjectHideFlags: 0

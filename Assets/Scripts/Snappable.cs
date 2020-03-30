@@ -8,6 +8,7 @@ public class Snappable : MonoBehaviour
 
     void Start()
     {
+        // Snaps to grid if it is an object that was placed in inspector during level design
         if (positionedInInspector)
             GridManager.instance.PlaceByTile(this, GridManager.instance.WorldToTileIndex(this.transform.position));
     }

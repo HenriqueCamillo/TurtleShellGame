@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] bool showGrid;
 
 
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
             instance = this;
@@ -22,13 +22,12 @@ public class GridManager : MonoBehaviour
         grid = new Snappable[gridSize, gridSize];
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Highlight(); 
     }
 
-    void Highlight()
+    private void Highlight()
     {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 tile = WorldToTileIndex(mousePosition);
@@ -48,16 +47,11 @@ public class GridManager : MonoBehaviour
     public bool PlaceByTile(Snappable snap, Vector2 tile)
     {
         if (!TileIsFree(tile))
-        {
-            snap.Reset();
             return false; 
-        }
 
         // If moving a tile (not placing a new), frees the last tile
         if (snap.isPlaced)
-        {
             SetGridContentByTile(null, tile);
-        }
 
         snap.Place(tile);
         SetGridContentByTile(snap, tile);
@@ -137,7 +131,7 @@ public class GridManager : MonoBehaviour
         return (Vector2)this.transform.position + tile + new Vector2(cellSize/2, cellSize/2);
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position, cellSize/2f);

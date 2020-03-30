@@ -6,7 +6,7 @@ public class Snappable : MonoBehaviour
     public Vector2 tile;
     [SerializeField] bool positionedInInspector;
 
-    void Start()
+    private void Start()
     {
         // Snaps to grid if it is an object that was placed in inspector during level design
         if (positionedInInspector)

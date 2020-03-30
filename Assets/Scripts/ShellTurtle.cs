@@ -25,7 +25,7 @@ public class ShellTurtle : Selectable
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (inAction)
         {
@@ -101,7 +101,7 @@ public class ShellTurtle : Selectable
         inAction = true;
     }
 
-    void RotateArrow(Vector2 direction)
+    private void RotateArrow(Vector2 direction)
     {
         arrow.transform.rotation = Quaternion.Euler(0f, 0f, Vector2.SignedAngle(Vector2.right, direction));
     }

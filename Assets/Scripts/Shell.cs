@@ -9,19 +9,19 @@ public class Shell : MonoBehaviour
     private Rigidbody2D rBody;
     private Vector2 direction;
 
-    void Start()
+    private void Start()
     {
         rBody = GetComponent<Rigidbody2D>();
         direction = (this.transform.rotation * Vector3.right).normalized;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         rBody.MovePosition((Vector2)this.transform.position + direction * speed * Time.deltaTime);
         CheckCollision();
     }
 
-    void CheckCollision()
+    private void CheckCollision()
     {
         Debug.DrawLine(this.transform.position, this.transform.position + (Vector3)direction * collisionDetectionDistance, Color.green);
         RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, collisionDetectionDistance, LayerMask.GetMask("Walls")); 

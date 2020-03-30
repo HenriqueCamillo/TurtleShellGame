@@ -16,7 +16,7 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (moving)
         {

@@ -11,6 +11,7 @@ public class GridManager : MonoBehaviour
     private Vector2 lastTile = Vector2.zero;
     [SerializeField] bool showGrid;
 
+    public float CellSize => cellSize;
 
     private void Awake()
     {

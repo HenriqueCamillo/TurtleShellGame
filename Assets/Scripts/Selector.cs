@@ -32,7 +32,7 @@ public class Selector : MonoBehaviour
         set
         {
             currentState = value;
-            if (currentState == State.MovingCamera || CurrentState == State.InAction)
+            if (currentState == State.MovingCamera /*|| CurrentState == State.InAction*/)
                 cameraMovement.Moving = true;
             else
                 cameraMovement.Moving = false;

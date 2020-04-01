@@ -24,7 +24,7 @@ public class Shell : MonoBehaviour
     private void CheckCollision()
     {
         Debug.DrawLine(this.transform.position, this.transform.position + (Vector3)direction * collisionDetectionDistance, Color.green);
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, collisionDetectionDistance, LayerMask.GetMask("Walls")); 
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, collisionDetectionDistance, LayerMask.GetMask("Walls") | LayerMask.GetMask("Turtles")); 
 
         if (hit)
         {
@@ -43,9 +43,15 @@ public class Shell : MonoBehaviour
                     direction = newDirection;   
                 }
             }
-            else if (hit.collider.CompareTag("HardWall"))
+            else if (hit.collider.CompareTag("HardWall") || hit.collider.CompareTag("ActionUnity"))
             {
                 Selector.instance.AcitonEnded();
+                Destroy(this.gameObject);
+            }
+            else if (hit.collider.CompareTag("TurtleInDanger"))
+            {
+                Selector.instance.AcitonEnded();
+                hit.collider.GetComponent<TurtleInDanger>().Rescue();
                 Destroy(this.gameObject);
             }
         }

@@ -188,6 +188,7 @@ public class Selector : MonoBehaviour
         blockPrefab = prefab;
         lastState = CurrentState;
         CurrentState = State.BlockUnitySelected;
+        OnUnselected?.Invoke();
     }
 
     private bool TryToSelect()

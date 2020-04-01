@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3393792021205844043}
   - component: {fileID: 3393792021205844053}
   - component: {fileID: -488035094471090297}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shell Turtle
   m_TagString: ActionUnity
   m_Icon: {fileID: 0}
@@ -101,6 +101,7 @@ MonoBehaviour:
     type: 3}
   arrow: {fileID: 6584814677965025488}
   minDragDistance: 0.3
+  isUsingRightHand: 0
 --- !u!114 &-488035094471090297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,9 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6022a354e5146439a3c03be51b9a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlaced: 1
+  isPlaced: 0
   tile: {x: 6, y: 3}
-  positionedInInspector: 0
+  positionedInInspector: 1
 --- !u!1 &6584814677965025488
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class GridManager : MonoBehaviour
     private Snappable[,] grid;
     private Vector2 lastTile = Vector2.zero;
     [SerializeField] bool showGrid;
+    [SerializeField] bool showGridLimits;
 
     public float CellSize => cellSize;
 
@@ -144,6 +145,17 @@ public class GridManager : MonoBehaviour
                 Gizmos.DrawLine(this.transform.position + Vector3.up * cellSize * gridSize + Vector3.right * i, this.transform.position + Vector3.right * i);
                 Gizmos.DrawLine(this.transform.position + Vector3.right * cellSize * gridSize + Vector3.up * i, this.transform.position + Vector3.up * i);
             }
+        }
+
+        if (showGridLimits)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(this.transform.position, this.transform.position + Vector3.right * gridSize * cellSize);
+            Gizmos.DrawLine(this.transform.position, this.transform.position + Vector3.up * gridSize * cellSize);
+
+            Gizmos.DrawLine(this.transform.position + Vector3.up * gridSize * cellSize, this.transform.position + Vector3.up * gridSize * cellSize + Vector3.right * gridSize * cellSize);
+            Gizmos.DrawLine(this.transform.position + Vector3.right * gridSize * cellSize, this.transform.position + Vector3.up * gridSize * cellSize + Vector3.right * gridSize * cellSize);
+
         }
     }
 }

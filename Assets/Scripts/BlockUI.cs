@@ -6,7 +6,7 @@ using TMPro;
 public class BlockUI : MonoBehaviour, IPointerClickHandler
 {
     private bool disabled = false;
-    private GameObject prefab;
+    public GameObject prefab;
     private int index;
     private Image image;
     public TextMeshProUGUI quantityText;
@@ -33,9 +33,16 @@ public class BlockUI : MonoBehaviour, IPointerClickHandler
     {
         if (!disabled)
         {
-            Selector.instance.SelectedBlockUnity(prefab);
-            image.color = Color.green;
-            inventory.selectedBlockIndex = index;
+            if (index == inventory.selectedBlockIndex)
+            {
+                Selector.instance.Unselect();
+            }
+            else
+            {
+                Selector.instance.SelectBlockUnity(this);
+                image.color = Color.green;
+                inventory.selectedBlockIndex = index;
+            }
         }
     }
 

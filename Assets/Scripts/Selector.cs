@@ -9,9 +9,12 @@ public class Selector : MonoBehaviour
 
     private Selectable selectedObject;
     private Selectable newContent;
-    private GameObject blockPrefab;
+    
+    private BlockUI selectedBlock;
+    public GameObject placingObject;
 
     private Vector2 currentTile;
+    private Vector2 placingObjectTile;
     private Vector2 selectedObjectTile;
     private bool clickOnUI = false;
 
@@ -22,7 +25,6 @@ public class Selector : MonoBehaviour
     public delegate void EventHandler();
     public event EventHandler OnBlockPlaced;
     public event EventHandler OnUnselected;
-
 
     public static Selector instance;
 
@@ -38,6 +40,8 @@ public class Selector : MonoBehaviour
                 cameraMovement.Moving = false;
         }
     }
+
+    public Selectable SelectedObject => selectedObject;
 
     private enum State
     {
@@ -61,11 +65,8 @@ public class Selector : MonoBehaviour
         cameraMovement = Camera.main.GetComponent<CameraMovement>();
     }
 
-    Vector3 lastPos;
     private void Update()
     {
-        
-
         if (Input.GetMouseButtonDown(0))
         {
             clickOnUI = EventSystem.current.IsPointerOverGameObject();
@@ -109,14 +110,28 @@ public class Selector : MonoBehaviour
                         break;
                     
                     case State.BlockUnitySelected:
+
                         currentTile = GridManager.instance.ScreenToTileIndex(Input.mousePosition);
-                        lastState = CurrentState;
-                        CurrentState = State.WaitingConfirmation;
                         
                         if (GridManager.instance.TileIsFree(currentTile))
+                        {
                             nextState = State.PlacingBlock;
-                        else
-                            nextState = State.Unselected;
+                            lastState = CurrentState;
+                            CurrentState = State.WaitingConfirmation;
+                        }
+
+                        break;
+
+                    case State.PlacingBlock:
+                        currentTile = GridManager.instance.ScreenToTileIndex(Input.mousePosition);
+
+                        if (GridManager.instance.TileIsFree(currentTile))
+                        {
+                            lastState = CurrentState;
+                            CurrentState = State.WaitingConfirmation;
+                            nextState = State.PlacingBlock;
+                        }
+
                         break;
                 }
             }
@@ -124,6 +139,7 @@ public class Selector : MonoBehaviour
         
         if (Input.GetMouseButtonUp(0))
         {
+
             clickOnUI = false;
 
             switch (CurrentState)
@@ -149,13 +165,16 @@ public class Selector : MonoBehaviour
                                 break;
 
                             case State.PlacingBlock:
-                                GameObject instance = Instantiate(blockPrefab, this.transform.position, Quaternion.identity);
-                                GridManager.instance.PlaceByTile(instance.GetComponent<Snappable>(), currentTile);
+                                placingObject.transform.position = GridManager.instance.TileToWorldPosition(tile);
+                                placingObjectTile = tile;
 
-                                lastState = CurrentState;
-                                Unselect();
-                                OnBlockPlaced?.Invoke();
+                                if (lastState == State.BlockUnitySelected)
+                                {
+                                    placingObject.SetActive(true);
+                                    UIManager.instace.DisplayBlockPlacementUI();
+                                }
 
+                                CurrentState = nextState;
                                 break;
                         }
                     }
@@ -172,6 +191,7 @@ public class Selector : MonoBehaviour
                 case State.Unselected:
                 case State.ActionUnitySelected:
                 case State.BlockUnitySelected:
+                case State.PlacingBlock:
                     lastState = CurrentState;
                     CurrentState = State.MovingCamera;
                     break;
@@ -183,12 +203,39 @@ public class Selector : MonoBehaviour
         }
     }
 
-    public void SelectedBlockUnity(GameObject prefab)
+    public void SelectBlockUnity(BlockUI block)
     {
-        blockPrefab = prefab;
+        selectedBlock = block;
+
+        if (placingObject != null)
+            Destroy(placingObject.gameObject);            
+        
+        placingObject = Instantiate(selectedBlock.prefab, this.transform.position, selectedBlock.prefab.transform.rotation);
+        placingObject.SetActive(false);
+
         lastState = CurrentState;
         CurrentState = State.BlockUnitySelected;
+
         OnUnselected?.Invoke();
+
+        if (selectedObject != null)
+            selectedObject.Unselect();
+    }
+
+    public void ConfirmPlacement()
+    {
+        GridManager.instance.PlaceByTile(placingObject.GetComponent<Snappable>(), placingObjectTile);
+        placingObject = null;
+
+        lastState = CurrentState;
+        OnBlockPlaced?.Invoke();
+        Unselect();
+    }
+
+    public void CancelPlacement()
+    {
+        Destroy(placingObject.gameObject);
+        Unselect();
     }
 
     private bool TryToSelect()
@@ -218,15 +265,19 @@ public class Selector : MonoBehaviour
             CurrentState = State.ActionUnitySelected;
         else if (selectedObject.CompareTag("BlockUnity"))
             CurrentState = State.BlockUnitySelected;
-
-
     }
 
     public void Unselect()
     {
         if (selectedObject != null)
             selectedObject.Unselect();
-        
+
+        if (placingObject != null)
+        {
+            Destroy(placingObject.gameObject);
+            placingObject = null;
+        }
+
         CurrentState = State.Unselected;
         OnUnselected?.Invoke();
     }
@@ -244,6 +295,5 @@ public class Selector : MonoBehaviour
         lastState = CurrentState;
         CurrentState = State.ActionUnitySelected;
         selectedObject.Select();
-        
     }
 }

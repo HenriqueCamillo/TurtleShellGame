@@ -9,7 +9,7 @@ public class ShellTurtle : Selectable
     private bool isAiming = false;
     private bool inAction = false;
     [SerializeField] float minDragDistance = 0.3f;
-    [SerializeField] bool isUsingRightHand;
+    public bool isUsingRightHand;
 
     // 8 direction vectors
     private Vector2[] possibleDirections = {Vector2.up, Vector2.right, Vector2.down, Vector2.left,
@@ -59,7 +59,7 @@ public class ShellTurtle : Selectable
 
     private void ThrowShell(Vector2 direction)
     {
-        GameObject shell = Instantiate(shellPrefab, arrow.transform.position, Quaternion.identity);
+        GameObject shell = Instantiate(shellPrefab, arrow.transform.position, Quaternion.identity, this.transform);
         shell.transform.rotation = Quaternion.Euler(0f, 0f, Vector2.SignedAngle(Vector2.right, direction));
     }
 
@@ -89,6 +89,7 @@ public class ShellTurtle : Selectable
     public override void Select()
     {
         isSelected = true;
+        UIManager.instace.DisplayShellTurtleUI();
         GetComponent<SpriteRenderer>().color = Color.green;
     }
 
@@ -103,6 +104,7 @@ public class ShellTurtle : Selectable
     public override void StartAction()
     {
         inAction = true;
+        UIManager.instace.DisableUI();
     }
 
     private void RotateArrow(Vector2 direction)

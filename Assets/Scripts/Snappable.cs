@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Snappable : MonoBehaviour
 {
+    [HideInInspector]
     public bool isPlaced = false;
     public Vector2 tile;
     [SerializeField] bool positionedInInspector;

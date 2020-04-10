@@ -69,7 +69,9 @@ public class GridManager : MonoBehaviour
 
     public bool TileIsFree(Vector2 tile)
     {
-        if (GetGridContentByTile(tile) != null)
+        if (!ValidTile(tile))
+            return false;
+        else if (GetGridContentByTile(tile) != null)
         {
             Debug.Log("Occupied tile");
             return false;
@@ -155,7 +157,6 @@ public class GridManager : MonoBehaviour
 
             Gizmos.DrawLine(this.transform.position + Vector3.up * gridSize * cellSize, this.transform.position + Vector3.up * gridSize * cellSize + Vector3.right * gridSize * cellSize);
             Gizmos.DrawLine(this.transform.position + Vector3.right * gridSize * cellSize, this.transform.position + Vector3.up * gridSize * cellSize + Vector3.right * gridSize * cellSize);
-
         }
     }
 }

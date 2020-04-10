@@ -86,4 +86,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 076543e8049a6da43920565b5160f5ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: -2353479823604470091}
+  prefab: {fileID: 0}
+  quantityText: {fileID: 0}

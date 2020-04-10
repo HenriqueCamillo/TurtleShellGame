@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     private BlockUI[] blocks;
     [SerializeField] GameObject blockUI;
     public int selectedBlockIndex;
+    [SerializeField] int widthSpaceUnits;
 
     private void Start()
     {
@@ -28,10 +29,11 @@ public class Inventory : MonoBehaviour
         GridLayoutGroup gridLayout = GetComponent<GridLayoutGroup>();
         RectTransform rectTransform = GetComponent<RectTransform>();
 
-        float xSize = gridLayout.cellSize.x * transform.childCount + gridLayout.spacing.x * (2 + transform.childCount);
+        float xSize = gridLayout.cellSize.x * transform.childCount + gridLayout.spacing.x * (widthSpaceUnits + transform.childCount);
         rectTransform.sizeDelta = new Vector2(xSize, rectTransform.sizeDelta.y);
 
         Selector.instance.OnBlockPlaced += DecreaseBlockCount;
+        Selector.instance.OnUnselected += UnselectBlock;
     }
 
     private void DecreaseBlockCount()
@@ -41,5 +43,11 @@ public class Inventory : MonoBehaviour
 
         if (items[selectedBlockIndex].quantity <= 0)
             blocks[selectedBlockIndex].Disable();
+
+    }
+
+    private void UnselectBlock()
+    {
+        selectedBlockIndex = -1;
     }
 }

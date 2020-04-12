@@ -28,10 +28,10 @@ public class Selector : MonoBehaviour
 
     public static Selector instance;
 
-    private State CurrentState
+    public State CurrentState
     {
         get => currentState;
-        set
+        private set
         {
             currentState = value;
             if (currentState == State.MovingCamera /*|| CurrentState == State.InAction*/)
@@ -43,7 +43,7 @@ public class Selector : MonoBehaviour
 
     public Selectable SelectedObject => selectedObject;
 
-    private enum State
+    public enum State
     {
         Unselected,
         Selected,
@@ -71,7 +71,6 @@ public class Selector : MonoBehaviour
         {
             clickOnUI = EventSystem.current.IsPointerOverGameObject();
             clickPosition = Input.mousePosition;
-            Debug.Log(clickOnUI);
 
             if (!clickOnUI)
             {
@@ -246,7 +245,6 @@ public class Selector : MonoBehaviour
     private bool TryToSelect()
     {
         Snappable content = GridManager.instance.GetGridContentByScreenPosition(Input.mousePosition);
-        Debug.Log(content);
         if (content != null && content.TryGetComponent(out Selectable selectable))
         {
             newContent = selectable;

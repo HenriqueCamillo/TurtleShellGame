@@ -60,7 +60,7 @@ public class ShellTurtle : Selectable
     private void ThrowShell(Vector2 direction)
     {
         GameObject shell = Instantiate(shellPrefab, arrow.transform.position, Quaternion.identity, this.transform);
-        shell.transform.rotation = Quaternion.Euler(0f, 0f, Vector2.SignedAngle(Vector2.right, direction));
+        shell.GetComponent<Shell>().direction = direction;
     }
 
     private Vector2 GetThrowDirection()

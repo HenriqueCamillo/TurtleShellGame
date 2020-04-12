@@ -136,6 +136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   collisionDetectionDistance: 0.15
+  direction: {x: 0, y: 0}
+  correctionTolerance: 0.01
+  correctionFactor: 1
 --- !u!95 &1850596808012873968
 Animator:
   serializedVersion: 3

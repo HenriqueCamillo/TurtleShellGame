@@ -33,7 +33,7 @@ public class BlockUI : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!disabled)
+        if (!disabled && Selector.instance.CurrentState != Selector.State.InAction)
         {
             if (index == inventory.selectedBlockIndex)
             {

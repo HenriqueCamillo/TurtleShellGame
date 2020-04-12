@@ -13,9 +13,9 @@ public class Selector : MonoBehaviour
     private BlockUI selectedBlock;
     public GameObject placingObject;
 
-    private Vector2 currentTile;
-    private Vector2 placingObjectTile;
-    private Vector2 selectedObjectTile;
+    private Vector2Int currentTile;
+    private Vector2Int placingObjectTile;
+    private Vector2Int selectedObjectTile;
     private bool clickOnUI = false;
 
     [SerializeField] State lastState = State.Unselected;
@@ -71,6 +71,7 @@ public class Selector : MonoBehaviour
         {
             clickOnUI = EventSystem.current.IsPointerOverGameObject();
             clickPosition = Input.mousePosition;
+            Debug.Log(clickOnUI);
 
             if (!clickOnUI)
             {
@@ -110,7 +111,6 @@ public class Selector : MonoBehaviour
                         break;
                     
                     case State.BlockUnitySelected:
-
                         currentTile = GridManager.instance.ScreenToTileIndex(Input.mousePosition);
                         
                         if (GridManager.instance.TileIsFree(currentTile))
@@ -118,6 +118,11 @@ public class Selector : MonoBehaviour
                             nextState = State.PlacingBlock;
                             lastState = CurrentState;
                             CurrentState = State.WaitingConfirmation;
+                        }
+                        else if (TryToSelect())
+                        {
+                            CurrentState = State.WaitingConfirmation;
+                            nextState = State.Selected;
                         }
 
                         break;
@@ -151,7 +156,7 @@ public class Selector : MonoBehaviour
                     break;
 
                 case State.WaitingConfirmation:
-                    Vector2 tile = GridManager.instance.ScreenToTileIndex(Input.mousePosition);
+                    Vector2Int tile = GridManager.instance.ScreenToTileIndex(Input.mousePosition);
                     if (tile == currentTile)
                     {
                         switch (nextState)
@@ -241,6 +246,7 @@ public class Selector : MonoBehaviour
     private bool TryToSelect()
     {
         Snappable content = GridManager.instance.GetGridContentByScreenPosition(Input.mousePosition);
+        Debug.Log(content);
         if (content != null && content.TryGetComponent(out Selectable selectable))
         {
             newContent = selectable;
@@ -256,6 +262,8 @@ public class Selector : MonoBehaviour
     {
         if (lastState == State.ActionUnitySelected || lastState == State.BlockUnitySelected)
             selectedObject.Unselect();
+
+        OnUnselected?.Invoke();
 
         selectedObject = newContent;
         selectedObjectTile = currentTile;

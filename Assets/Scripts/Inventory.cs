@@ -14,13 +14,15 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        UnselectBlock();
+
         blocks = new BlockUI[items.Length];
 
         for (int i = 0; i < items.Length; i++)
         {
             GameObject block = Instantiate(blockUI, this.transform);
             blocks[i] = block.GetComponent<BlockUI>();
-            blocks[i].Initialize(items[i].block, i, this);
+            blocks[i].Initialize(items[i], i, this);
 
             if (items[i].quantity <= 0)
                 blocks[i].Disable();
@@ -39,7 +41,7 @@ public class Inventory : MonoBehaviour
     private void DecreaseBlockCount()
     {
         items[selectedBlockIndex].quantity--;
-        //TODO blocks[selectedBlockIndex].quantityText.text = items[selectedBlockIndex].quantity.ToString();
+        blocks[selectedBlockIndex].quantityText.text = items[selectedBlockIndex].quantity.ToString();
 
         if (items[selectedBlockIndex].quantity <= 0)
             blocks[selectedBlockIndex].Disable();

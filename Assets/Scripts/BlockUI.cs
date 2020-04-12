@@ -21,9 +21,11 @@ public class BlockUI : MonoBehaviour, IPointerClickHandler
     }
 
 
-    public void Initialize(GameObject prefab, int index, Inventory inventory)
+    public void Initialize(InventoryItem item, int index, Inventory inventory)
     {
-        this.prefab = prefab;
+        this.prefab = item.block;
+        quantityText.text = item.quantity.ToString();
+
         this.index = index;
         this.inventory = inventory;
         image.sprite = prefab.GetComponent<SpriteRenderer>().sprite;

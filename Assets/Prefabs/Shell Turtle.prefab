@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393792021205844054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 10.5, y: 6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6584814677965025494}
@@ -102,7 +102,7 @@ MonoBehaviour:
     type: 3}
   arrow: {fileID: 6584814677965025488}
   minDragDistance: 0.3
-  isUsingRightHand: 0
+  isUsingRightHand: 1
 --- !u!114 &-488035094471090297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6022a354e5146439a3c03be51b9a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlaced: 0
-  tile: {x: 6, y: 3}
-  positionedInInspector: 0
+  isPlaced: 1
+  tile: {x: 10, y: 6}
+  positionedInInspector: 1
 --- !u!61 &-1153169496837345754
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ Transform:
   m_GameObject: {fileID: 6584814677965025488}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 0.3, z: 1}
+  m_LocalScale: {x: 1.8000001, y: 0.22, z: 1}
   m_Children: []
   m_Father: {fileID: 3393792021205844052}
   m_RootOrder: 0
@@ -214,8 +214,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 4755184066016001568, guid: 9b96dbacf67484f43a9863aec71cb9a6,
+    type: 3}
+  m_Color: {r: 0.43529415, g: 0.67058825, b: 0.10980393, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

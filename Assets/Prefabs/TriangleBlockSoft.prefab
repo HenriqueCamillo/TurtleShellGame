@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1428391348096734673}
   - component: {fileID: 6826064211836229578}
   m_Layer: 8
-  m_Name: TriangleBlock
+  m_Name: TriangleBlockSoft
   m_TagString: SoftWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

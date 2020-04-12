@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1317124966412501255}
   - component: {fileID: 1317124966412501250}
   m_Layer: 8
-  m_Name: SquareBlock
-  m_TagString: HardWall
+  m_Name: SquareBlockSoft
+  m_TagString: SoftWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

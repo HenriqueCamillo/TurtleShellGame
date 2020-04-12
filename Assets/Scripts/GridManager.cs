@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class GridManager : MonoBehaviour
     [SerializeField] float cellSize;
     [SerializeField] int gridSize;
     private Snappable[,] grid;
-    private Vector2 lastTile = Vector2.zero;
+    private Vector2Int lastTile = Vector2Int.zero;
+    [SerializeField] Tilemap softWall;
+    [SerializeField] Tilemap hardWall;
     [SerializeField] bool showGrid;
     [SerializeField] bool showGridLimits;
 
@@ -27,12 +30,15 @@ public class GridManager : MonoBehaviour
     private void Update()
     {
         // Highlight(); 
+        // if (Input.GetMouseButtonDown(0))
+        //     TileIsFree(ScreenToTileIndex(Input.mousePosition));
     }
+
 
     private void Highlight()
     {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 tile = WorldToTileIndex(mousePosition);
+            Vector2Int tile = WorldToTileIndex(mousePosition);
 
             if (tile == lastTile)           return;
             if (tile.x < 0 || tile.y < 0)   return;
@@ -46,7 +52,7 @@ public class GridManager : MonoBehaviour
             lastTile = tile;
     }
 
-    public bool PlaceByTile(Snappable snap, Vector2 tile)
+    public bool PlaceByTile(Snappable snap, Vector2Int tile)
     {
         if (!TileIsFree(tile))
             return false; 
@@ -63,36 +69,47 @@ public class GridManager : MonoBehaviour
 
     public bool PlaceByScreenPosition(Snappable snap, Vector2 screenPosition)
     {
-        Vector2 tile = WorldToTileIndex(Camera.main.ScreenToWorldPoint(screenPosition));
+        Vector2Int tile = WorldToTileIndex(Camera.main.ScreenToWorldPoint(screenPosition));
         return PlaceByTile(snap, tile);
     }
 
-    public bool TileIsFree(Vector2 tile)
+    public bool TileIsFree(Vector2Int tile)
     {
         if (!ValidTile(tile))
             return false;
         else if (GetGridContentByTile(tile) != null)
         {
-            Debug.Log("Occupied tile");
+            // Debug.Log("Occupied tile (object)");
             return false;
         }
         else
-            return true;
+        {
+            TileBase hardWallTile = softWall.GetTile((Vector3Int)tile);
+            TileBase softWallTile = hardWall.GetTile((Vector3Int)tile);
+
+            if (hardWallTile != null || softWallTile != null)
+            {
+                // Debug.Log("Occupied tile (tilemap)");
+                return false;
+            }
+            else
+                return true;
+        }
     }
 
-    public void SetGridContentByTile(Snappable content, Vector2 tile)
+    public void SetGridContentByTile(Snappable content, Vector2Int tile)
     {
         if (!ValidTile(tile))
             return;
         else
-            grid[(int)tile.x, (int)tile.y] = content;
+            grid[tile.x, tile.y] = content;
     }
-    public Snappable GetGridContentByTile(Vector2 tile)
+    public Snappable GetGridContentByTile(Vector2Int tile)
     {
         if (!ValidTile(tile))
             return null;
         else
-            return grid[(int)tile.x, (int)tile.y];
+            return grid[tile.x, tile.y];
     }
 
     public Snappable GetGridContentByScreenPosition(Vector2 screenPosition)
@@ -100,7 +117,7 @@ public class GridManager : MonoBehaviour
         return GetGridContentByTile(ScreenToTileIndex(screenPosition));
     }
 
-    public bool ValidTile(Vector2 tile)
+    public bool ValidTile(Vector2Int tile)
     {
         if (tile.x % 1 != 0 || tile.y % 1 != 0 || tile.x < 0 || tile.y < 0)
         {
@@ -111,7 +128,7 @@ public class GridManager : MonoBehaviour
             return true;
     }
 
-    public Vector2 ScreenToTileIndex(Vector2 screenPosition)
+    public Vector2Int ScreenToTileIndex(Vector2 screenPosition)
     {
         Vector2 world = Camera.main.ScreenToWorldPoint(screenPosition);
         return WorldToTileIndex(world);
@@ -122,15 +139,15 @@ public class GridManager : MonoBehaviour
         return TileToWorldPosition(WorldToTileIndex(position));
     }
 
-    public Vector2 WorldToTileIndex(Vector2 position)
+    public Vector2Int WorldToTileIndex(Vector2 position)
     {
         // The tile index must be relative to the position of the grid
         position -= (Vector2)this.transform.position;
 
-        Vector2 tile = new Vector2(Mathf.Floor(position.x/cellSize), Mathf.Floor(position.y/cellSize));
+        Vector2Int tile = new Vector2Int((int)Mathf.Floor(position.x/cellSize), (int)Mathf.Floor(position.y/cellSize));
         return tile;
     }
-    public Vector2 TileToWorldPosition(Vector2 tile)
+    public Vector2 TileToWorldPosition(Vector2Int tile)
     {
         return (Vector2)this.transform.position + tile + new Vector2(cellSize/2, cellSize/2);
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -24,9 +25,21 @@ public class LevelManager : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+            Retry();
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
     private void EndLevel()
     {
         Debug.Log("You win");
+        Retry();
     }
 
 }

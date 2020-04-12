@@ -15,7 +15,8 @@ public class TurtleInDanger : MonoBehaviour
     {
         GridManager.instance.SetGridContentByTile(null, snappable.tile);
         //TODO play animation
-        Instantiate(shellTurtle, this.transform.position, Quaternion.identity);
+        GameObject instance = Instantiate(shellTurtle, this.transform.position, Quaternion.identity, this.transform.parent);
+        GridManager.instance.PlaceByTile(instance.GetComponent<Snappable>(), snappable.tile);
         LevelManager.instance.TurtlesWithoutShell--;
         Destroy(this.gameObject);
     }

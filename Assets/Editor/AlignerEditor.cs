@@ -11,9 +11,10 @@ public class AlignerEditor : Editor
 
         Aligner aligner = (Aligner)target;
         if (GUILayout.Button("Align"))
-        {
             aligner.Align();
-        }
+
+        if (GUILayout.Button("Set flags"))
+            aligner.SetFlags();
     }
 }
 

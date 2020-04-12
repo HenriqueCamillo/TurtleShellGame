@@ -4,8 +4,8 @@ public class Snappable : MonoBehaviour
 {
     [HideInInspector]
     public bool isPlaced = false;
-    public Vector2 tile;
-    [SerializeField] bool positionedInInspector;
+    public Vector2Int tile;
+    public bool positionedInInspector;
 
     private void Start()
     {
@@ -14,7 +14,7 @@ public class Snappable : MonoBehaviour
             GridManager.instance.PlaceByTile(this, GridManager.instance.WorldToTileIndex(this.transform.position));
     }
 
-    public void Place(Vector2 tile)
+    public void Place(Vector2Int tile)
     {
         this.tile = tile;
         this.transform.position = GridManager.instance.TileToWorldPosition(tile);

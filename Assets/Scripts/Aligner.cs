@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
+
 
 [ExecuteInEditMode]
 public class Aligner : MonoBehaviour 
@@ -27,6 +29,8 @@ public class Aligner : MonoBehaviour
 
     public void SetFlags()
     {
+        EditorSceneManager.MarkSceneDirty(this.gameObject.scene);
+
         for (int i = 0; i < this.transform.childCount; i++)
         {
             Snappable snappableChild = this.transform.GetChild(i).GetComponent<Snappable>();
@@ -34,7 +38,11 @@ public class Aligner : MonoBehaviour
             if (snappableChild == null)
                 Debug.LogError(snappableChild.name + " is not snappable");
             else
+            {
+                EditorUtility.SetDirty(snappableChild);
                 snappableChild.positionedInInspector = true;
+                snappableChild.isPlaced = false;
+            }
         }
     }
 }

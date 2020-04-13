@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: HardWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1428391348096734673, guid: 50bbcfa50c464e74c999aa1ece11a0f2,
+        type: 3}
+      propertyPath: isPlaced
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1428391348096734674, guid: 50bbcfa50c464e74c999aa1ece11a0f2,
         type: 3}
       propertyPath: m_Color.r

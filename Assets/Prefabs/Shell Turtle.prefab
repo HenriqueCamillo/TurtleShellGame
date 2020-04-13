@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6022a354e5146439a3c03be51b9a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlaced: 1
+  isPlaced: 0
   tile: {x: 10, y: 6}
   positionedInInspector: 1
 --- !u!61 &-1153169496837345754

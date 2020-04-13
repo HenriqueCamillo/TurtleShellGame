@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class Selector : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class Selector : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            clickOnUI = EventSystem.current.IsPointerOverGameObject();
+            clickOnUI = EventSystem.current.IsPointerOverGameObject() | IsPointerOverUIObject();
             clickPosition = Input.mousePosition;
 
             if (!clickOnUI)
@@ -301,5 +302,14 @@ public class Selector : MonoBehaviour
         lastState = CurrentState;
         CurrentState = State.ActionUnitySelected;
         selectedObject.Select();
+    }
+
+    private bool IsPointerOverUIObject() 
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }
